@@ -1,29 +1,20 @@
-name: Python CI
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # change this to match your main branch name
-  pull_request:
-    branches:
-      - main  # change this to match your main branch name
+      - main  # adjust branch name as necessary
 
 jobs:
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'  # specify your desired Python version, e.g., 3.7, 3.8, 3.9
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-
-    - name: Run Python script
-      run: python main.py  # assuming your Python script is named main.py
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
